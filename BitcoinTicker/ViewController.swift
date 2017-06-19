@@ -14,6 +14,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     let baseURL = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTC"
     let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
+    
+    let currencySymbol = ["$", "R$", "$", "¥", "€", "£", "$", "Rp", "₪", "₹", "¥", "$", "kr", "$", "zł", "lei", "₽", "kr", "$", "$", "R"]
+    
     var finalURL = ""
 
     //Pre-setup IBOutlets
@@ -47,6 +50,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         finalURL = baseURL + currencyArray[row]
         print(finalURL)
+        getBitcoinData(url: finalURL)
     }
     
     
@@ -82,21 +86,21 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-//    //MARK: - JSON Parsing
-//    /***************************************************************/
-//    
-//    func updateWeatherData(json : JSON) {
-//        
-//        let tempResult = json["main"]["temp"].double
-//        
-//        weatherData.temperature = Int(round(tempResult!) - 273.15)
-//        weatherData.city = json["name"].stringValue
-//        weatherData.condition = json["weather"][0]["id"].intValue
-//        weatherData.weatherIconName = weatherData.updateWeatherIcon(condition: weatherData.condition)
-//        
-//        updateUIWithWeatherData()
-//    }
-//    
+    //MARK: - JSON Parsing
+    /***************************************************************/
+    
+    func updateBitcoinData(json : JSON) {
+        
+        if let bitcoinResult = json["last"].double {
+            bitcoinPriceLabel.text = String(bitcoinResult)
+            
+        } else {
+            bitcoinPriceLabel.text = "Bitcoin data unavailable!"
+        }
+        
+        
+    }
+    
 
 
 
