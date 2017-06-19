@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -42,39 +44,44 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return currencyArray[row]
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        finalURL = baseURL + currencyArray[row]
+        print(finalURL)
+    }
+    
     
     
 
     
     
     
-//    
-//    //MARK: - Networking
-//    /***************************************************************/
-//    
-//    func getWeatherData(url: String, parameters: [String : String]) {
-//        
-//        Alamofire.request(url, method: .get, parameters: parameters)
-//            .responseJSON { response in
-//                if response.result.isSuccess {
-//                    
-//                    print("Sucess! Got the weather data")
-//                    let weatherJSON : JSON = JSON(response.result.value)
-//                    
-//                    self.updateWeatherData(json: weatherJSON)
-//                    
-//                } else {
-//                    print("Error: \(response.result.error)")
-//                    self.cityLabel.text = "Connection Issues"
-//                }
-//        }
-//        
-//    }
-//    
-//    
-//    
-//    
-//    
+    
+    //MARK: - Networking
+    /***************************************************************/
+    
+    func getBitcoinData(url: String) {
+        
+        Alamofire.request(url, method: .get)
+            .responseJSON { response in
+                if response.result.isSuccess {
+                    
+                    print("Sucess! Got the Bitcoin data")
+                    let bitcoinJSON : JSON = JSON(response.result.value)
+                    
+                    self.updateBitcoinData(json: bitcoinJSON)
+                    
+                } else {
+                    print("Error: \(response.result.error)")
+                    self.bitcoinPriceLabel.text = "Connection Issues"
+                }
+        }
+        
+    }
+    
+    
+    
+    
+    
 //    //MARK: - JSON Parsing
 //    /***************************************************************/
 //    
